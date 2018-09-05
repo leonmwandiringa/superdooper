@@ -1,6 +1,6 @@
-# betlogr
+# betlogger
 
-betlogr is a Lightweight blazing fast HTTP request logger middleware for node.js for logging request metrics and stats.
+betlogger is a Lightweight blazing fast HTTP request logger middleware for node.js for logging request metrics and stats.
 
 ## Features
 
@@ -22,10 +22,10 @@ logging incoming requests -----------------
 
 ```javascript
 // Using Node.js `require()`
-const betlogr = require('betlogr');
+const betlogger = require('betlogger');
 
 // Using ES6 imports
-import betlogr from 'betlogr';
+import betlogger from 'betlogger';
 ```
 
 ## Contributors
@@ -38,19 +38,19 @@ more contributors are welcome
 First install [node.js](http://nodejs.org/). Then:
 
 ```sh
-$ npm install betlogr
+$ npm install betlogger
 ```
 
 ## Overview
 
-### Using betlogr
+### Using betlogger
 
 ```js
 const app = require('express')();
-const betlogr = require('betlogr');
+const betlogger = require('betlogger');
 const port = 3000;
 
-app.use(betlogr('loggingfilelocation.log'));
+app.use(betlogger('loggingfilelocation.log'));
 
 app.get('/', function(req, res){
 
