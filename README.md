@@ -38,7 +38,7 @@ more contributors are welcome
 First install [node.js](http://nodejs.org/). Then:
 
 ```sh
-$ npm install betlog
+$ npm install betlogr
 ```
 
 ## Overview
