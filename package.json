@@ -1,7 +1,7 @@
 {
   "name": "betlogr",
   "description": "Lightweight blazing fast HTTP request logger middleware for node.js for logging request metrics and stats",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "contributors": [
     "Leon Tinashe Mwandiringa <tinashe.leon@yahoo.com><leonmwandiringa.ga>"
   ],
