@@ -57,7 +57,7 @@ function betlog (fileLink) {
 
   // stream
   var buffer = opts.buffer
-  var stream = fileToWriteTo ? fs.createWriteStream(path.join(__dirname, fileToWriteTo), {flags: 'a'}) : process.stdout
+  var stream = fileToWriteTo ? fs.createWriteStream(path.join(__dirname, "../"+fileToWriteTo), {flags: 'a'}) : process.stdout
 
   // buffering support
   if (buffer) {
@@ -197,7 +197,6 @@ betlog.token('referrer', function getReferrerToken (req) {
  */
 
 betlog.token('remote-addr', HELPER.getip)
-
 
 /**
  * HTTP version
