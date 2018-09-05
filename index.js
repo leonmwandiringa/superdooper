@@ -255,7 +255,6 @@ function compile (format) {
     return '" +\n    (' + tokenFunction + '(' + tokenArguments + ') || "-") + "'
   }) + '"'
 
-  // eslint-disable-next-line no-new-func
   return new Function('tokens, req, res', js)
 }
 
