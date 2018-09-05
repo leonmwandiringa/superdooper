@@ -21,7 +21,7 @@ module.exports.token = token
  * @private
  */
 
-var HELPER = require('./helpers')
+
 var debug = require('debug')('betlogr')
 var onFinished = require('on-finished')
 var onHeaders = require('on-headers')
@@ -75,14 +75,14 @@ function betlogr (fileLink) {
     // request data
     req._startAt = undefined
     req._startTime = undefined
-    req._remoteAddress = HELPER.getip(req)
+    req._remoteAddress = getip(req)
 
     // response data
     res._startAt = undefined
     res._startTime = undefined
 
     // record request start
-    HELPER.recordStartTime.call(req);
+    recordStartTime.call(req);
 
     
     function logRequest () {
@@ -100,7 +100,7 @@ function betlogr (fileLink) {
 
 
       // record response start
-      onHeaders(res, HELPER.recordStartTime)
+      onHeaders(res, recordStartTime)
 
       // log when response finished
       onFinished(res, logRequest)
@@ -179,7 +179,7 @@ betlogr.token('date', function getDateToken (req, res, format) {
  */
 
 betlogr.token('status', function getStatusToken (req, res) {
-  return HELPER.headersSent(res)
+  return headersSent(res)
     ? String(res.statusCode)
     : undefined
 })
@@ -196,7 +196,7 @@ betlogr.token('referrer', function getReferrerToken (req) {
  * remote address
  */
 
-betlogr.token('remote-addr', HELPER.getip)
+betlogr.token('remote-addr', getip)
 
 /**
  * HTTP version
@@ -220,7 +220,7 @@ betlogr.token('user-agent', function getUserAgentToken (req) {
  */
 
 betlogr.token('res', function getResponseHeader (req, res, field) {
-  if (!HELPER.headersSent(res)) {
+  if (!headersSent(res)) {
     return undefined
   }
 
@@ -295,3 +295,83 @@ function token (name, fn) {
   function getFormatFunction () {
     return compile(betlogr.default);
   }
+
+  /*!
+ * betlogr
+ * Copyright(c) 2018 Leon Tinashe Mwandiringa.
+ * MIT Licensed
+ * reusable functions store
+ */
+
+/**
+ * Create a basic buffering stream.
+ *
+ * @param {object} stream
+ * @param {number} interval
+ * @public
+ */
+
+function createBufferStream (stream, interval) {
+  var buf = []
+  var timer = null
+
+  // flush function
+  function flush () {
+    timer = null
+    stream.write(buf.join(''))
+    buf.length = 0
+  }
+
+  // write function
+  function write (str) {
+    if (timer === null) {
+      timer = setTimeout(flush, interval)
+    }
+
+    buf.push(str)
+  }
+
+  // return a minimal "stream"
+  return { write: write }
+}
+
+
+/**
+ * Get request IP address.
+ *
+ * @private
+ * @param {IncomingMessage} req
+ * @return {string}
+ */
+
+function getip (req) {
+  return req.ip ||
+    req._remoteAddress ||
+    (req.connection && req.connection.remoteAddress) ||
+    undefined
+}
+
+/**
+ * Determine if the response headers have been sent.
+ *
+ * @param {object} res
+ * @returns {boolean}
+ * @private
+ */
+
+function headersSent (res) {
+  return typeof res.headersSent !== 'boolean'
+    ? Boolean(res._header)
+    : res.headersSent
+}
+
+
+/**
+ * Record the start time.
+ * @private
+ */
+
+function recordStartTime () {
+  this._startAt = process.hrtime()
+  this._startTime = new Date()
+}
