@@ -1,5 +1,5 @@
 /*!
- * betlog
+ * betlogr
  * Copyright(c) 2018 Leon Tinashe Mwandiringa.
  * MIT Licensed
  * reusable functions store

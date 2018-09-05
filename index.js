@@ -1,5 +1,5 @@
 /*!
- * betlog
+ * betlogr
  * Copyright(c) 2018 Leon Tinashe Mwandiringa.
  * MIT Licensed
  */
@@ -11,7 +11,7 @@
  * @public
  */
 
-module.exports = betlog
+module.exports = betlogr
 module.exports.compile = compile
 module.exports.format = format
 module.exports.token = token
@@ -22,7 +22,7 @@ module.exports.token = token
  */
 
 var HELPER = require('./helpers')
-var debug = require('debug')('betlog')
+var debug = require('debug')('betlogr')
 var onFinished = require('on-finished')
 var onHeaders = require('on-headers')
 var fs = require('fs')
@@ -43,7 +43,7 @@ var DEFAULT_BUFFER_DURATION = 1000
  * @return {Function} middleware
  */
 
-function betlog (fileLink) {
+function betlogr (fileLink) {
 
   var fileToWriteTo = fileLink && typeof fileLink == 'string' ? fileLink : null;
 
@@ -87,7 +87,7 @@ function betlog (fileLink) {
     
     function logRequest () {
 
-      var line = formatLine(betlog, req, res)
+      var line = formatLine(betlogr, req, res)
 
       if (line == null) {
         debug('skip line')
@@ -114,13 +114,13 @@ function betlog (fileLink) {
  * @uses init logger function
  */
 
-betlog.format('default', ':remote-addr - [:date] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent" :response-time ms :cpu s :memory mb')
+betlogr.format('default', ':remote-addr - [:date] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent" :response-time ms :cpu s :memory mb')
 
 /**
  * request url
  */
 
-betlog.token('url', function getUrlToken (req) {
+betlogr.token('url', function getUrlToken (req) {
   return req.originalUrl || req.url
 })
 
@@ -128,7 +128,7 @@ betlog.token('url', function getUrlToken (req) {
  * cpu time used
  */
 
-betlog.token('cpu', function getMemoryUsed(req){
+betlogr.token('cpu', function getMemoryUsed(req){
   return (Number(process.cpuUsage().system/1e6)+Number(process.cpuUsage().user/1e6)).toFixed(2);
 })
 
@@ -136,7 +136,7 @@ betlog.token('cpu', function getMemoryUsed(req){
  * memory used
  */
 
- betlog.token('memory', function getMemoryUsed(req){
+ betlogr.token('memory', function getMemoryUsed(req){
     return Number((process.memoryUsage().heapUsed/2.048e6).toFixed(2))
  })
 
@@ -144,7 +144,7 @@ betlog.token('cpu', function getMemoryUsed(req){
  * request method
  */
 
-betlog.token('method', function getMethodToken (req) {
+betlogr.token('method', function getMethodToken (req) {
   return req.method
 })
 
@@ -152,7 +152,7 @@ betlog.token('method', function getMethodToken (req) {
  * response time in milliseconds
  */
 
-betlog.token('response-time', function getResponseTimeToken (req, res, digits) {
+betlogr.token('response-time', function getResponseTimeToken (req, res, digits) {
   if (!req._startAt || !res._startAt) {
     // missing request and/or response start time
     return
@@ -170,7 +170,7 @@ betlog.token('response-time', function getResponseTimeToken (req, res, digits) {
  * current date
  */
 
-betlog.token('date', function getDateToken (req, res, format) {
+betlogr.token('date', function getDateToken (req, res, format) {
     return new Date().toUTCString()
 })
 
@@ -178,7 +178,7 @@ betlog.token('date', function getDateToken (req, res, format) {
  * response status code
  */
 
-betlog.token('status', function getStatusToken (req, res) {
+betlogr.token('status', function getStatusToken (req, res) {
   return HELPER.headersSent(res)
     ? String(res.statusCode)
     : undefined
@@ -188,7 +188,7 @@ betlog.token('status', function getStatusToken (req, res) {
  * normalized referrer
  */
 
-betlog.token('referrer', function getReferrerToken (req) {
+betlogr.token('referrer', function getReferrerToken (req) {
   return req.headers['referer'] || req.headers['referrer']
 })
 
@@ -196,13 +196,13 @@ betlog.token('referrer', function getReferrerToken (req) {
  * remote address
  */
 
-betlog.token('remote-addr', HELPER.getip)
+betlogr.token('remote-addr', HELPER.getip)
 
 /**
  * HTTP version
  */
 
-betlog.token('http-version', function getHttpVersionToken (req) {
+betlogr.token('http-version', function getHttpVersionToken (req) {
   return req.httpVersionMajor + '.' + req.httpVersionMinor
 })
 
@@ -210,7 +210,7 @@ betlog.token('http-version', function getHttpVersionToken (req) {
  * User agent string
  */
 
-betlog.token('user-agent', function getUserAgentToken (req) {
+betlogr.token('user-agent', function getUserAgentToken (req) {
   return req.headers['user-agent']
 })
 
@@ -219,7 +219,7 @@ betlog.token('user-agent', function getUserAgentToken (req) {
  * response header
  */
 
-betlog.token('res', function getResponseHeader (req, res, field) {
+betlogr.token('res', function getResponseHeader (req, res, field) {
   if (!HELPER.headersSent(res)) {
     return undefined
   }
@@ -268,7 +268,7 @@ function compile (format) {
  */
 
 function token (name, fn) {
-  betlog[name] = fn
+  betlogr[name] = fn
   return this
 }
 
@@ -281,7 +281,7 @@ function token (name, fn) {
    */
   
   function format (name, fmt) {
-    betlog[name] = fmt
+    betlogr[name] = fmt
     return this
   }
 
@@ -293,5 +293,5 @@ function token (name, fn) {
    */
   
   function getFormatFunction () {
-    return compile(betlog.default);
+    return compile(betlogr.default);
   }
