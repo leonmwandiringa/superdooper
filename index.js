@@ -57,7 +57,7 @@ function superdooper (fileLink) {
 
   // stream
   var buffer = opts.buffer
-  var stream = fileToWriteTo ? fs.createWriteStream(path.join(__dirname, "../"+fileToWriteTo), {flags: 'a'}) : process.stdout
+  var stream = fileToWriteTo ? fs.createWriteStream(path.join(__dirname, "../../"+fileToWriteTo), {flags: 'a'}) : process.stdout
 
   // buffering support
   if (buffer) {
