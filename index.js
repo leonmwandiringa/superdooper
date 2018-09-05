@@ -1,5 +1,5 @@
 /*!
- * betlogger
+ * superdooper
  * Copyright(c) 2018 Leon Tinashe Mwandiringa.
  * MIT Licensed
  */
@@ -11,7 +11,7 @@
  * @public
  */
 
-module.exports = betlogger
+module.exports = superdooper
 module.exports.compile = compile
 module.exports.format = format
 module.exports.token = token
@@ -22,7 +22,7 @@ module.exports.token = token
  */
 
 
-var debug = require('debug')('betlogger')
+var debug = require('debug')('superdooper')
 var onFinished = require('on-finished')
 var onHeaders = require('on-headers')
 var fs = require('fs')
@@ -43,7 +43,7 @@ var DEFAULT_BUFFER_DURATION = 1000
  * @return {Function} middleware
  */
 
-function betlogger (fileLink) {
+function superdooper (fileLink) {
 
   var fileToWriteTo = fileLink && typeof fileLink == 'string' ? fileLink : null;
 
@@ -87,7 +87,7 @@ function betlogger (fileLink) {
     
     function logRequest () {
 
-      var line = formatLine(betlogger, req, res)
+      var line = formatLine(superdooper, req, res)
 
       if (line == null) {
         debug('skip line')
@@ -114,13 +114,13 @@ function betlogger (fileLink) {
  * @uses init logger function
  */
 
-betlogger.format('default', ':remote-addr - [:date] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent" :response-time ms :cpu s :memory mb')
+superdooper.format('default', ':remote-addr - [:date] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent" :response-time ms :cpu s :memory mb')
 
 /**
  * request url
  */
 
-betlogger.token('url', function getUrlToken (req) {
+superdooper.token('url', function getUrlToken (req) {
   return req.originalUrl || req.url
 })
 
@@ -128,7 +128,7 @@ betlogger.token('url', function getUrlToken (req) {
  * cpu time used
  */
 
-betlogger.token('cpu', function getMemoryUsed(req){
+superdooper.token('cpu', function getMemoryUsed(req){
   return (Number(process.cpuUsage().system/1e6)+Number(process.cpuUsage().user/1e6)).toFixed(2);
 })
 
@@ -136,7 +136,7 @@ betlogger.token('cpu', function getMemoryUsed(req){
  * memory used
  */
 
- betlogger.token('memory', function getMemoryUsed(req){
+ superdooper.token('memory', function getMemoryUsed(req){
     return Number((process.memoryUsage().heapUsed/2.048e6).toFixed(2))
  })
 
@@ -144,7 +144,7 @@ betlogger.token('cpu', function getMemoryUsed(req){
  * request method
  */
 
-betlogger.token('method', function getMethodToken (req) {
+superdooper.token('method', function getMethodToken (req) {
   return req.method
 })
 
@@ -152,7 +152,7 @@ betlogger.token('method', function getMethodToken (req) {
  * response time in milliseconds
  */
 
-betlogger.token('response-time', function getResponseTimeToken (req, res, digits) {
+superdooper.token('response-time', function getResponseTimeToken (req, res, digits) {
   if (!req._startAt || !res._startAt) {
     // missing request and/or response start time
     return
@@ -170,7 +170,7 @@ betlogger.token('response-time', function getResponseTimeToken (req, res, digits
  * current date
  */
 
-betlogger.token('date', function getDateToken (req, res, format) {
+superdooper.token('date', function getDateToken (req, res, format) {
     return new Date().toUTCString()
 })
 
@@ -178,7 +178,7 @@ betlogger.token('date', function getDateToken (req, res, format) {
  * response status code
  */
 
-betlogger.token('status', function getStatusToken (req, res) {
+superdooper.token('status', function getStatusToken (req, res) {
   return headersSent(res)
     ? String(res.statusCode)
     : undefined
@@ -188,7 +188,7 @@ betlogger.token('status', function getStatusToken (req, res) {
  * normalized referrer
  */
 
-betlogger.token('referrer', function getReferrerToken (req) {
+superdooper.token('referrer', function getReferrerToken (req) {
   return req.headers['referer'] || req.headers['referrer']
 })
 
@@ -196,13 +196,13 @@ betlogger.token('referrer', function getReferrerToken (req) {
  * remote address
  */
 
-betlogger.token('remote-addr', getip)
+superdooper.token('remote-addr', getip)
 
 /**
  * HTTP version
  */
 
-betlogger.token('http-version', function getHttpVersionToken (req) {
+superdooper.token('http-version', function getHttpVersionToken (req) {
   return req.httpVersionMajor + '.' + req.httpVersionMinor
 })
 
@@ -210,7 +210,7 @@ betlogger.token('http-version', function getHttpVersionToken (req) {
  * User agent string
  */
 
-betlogger.token('user-agent', function getUserAgentToken (req) {
+superdooper.token('user-agent', function getUserAgentToken (req) {
   return req.headers['user-agent']
 })
 
@@ -219,7 +219,7 @@ betlogger.token('user-agent', function getUserAgentToken (req) {
  * response header
  */
 
-betlogger.token('res', function getResponseHeader (req, res, field) {
+superdooper.token('res', function getResponseHeader (req, res, field) {
   if (!headersSent(res)) {
     return undefined
   }
@@ -268,7 +268,7 @@ function compile (format) {
  */
 
 function token (name, fn) {
-  betlogger[name] = fn
+  superdooper[name] = fn
   return this
 }
 
@@ -281,7 +281,7 @@ function token (name, fn) {
    */
   
   function format (name, fmt) {
-    betlogger[name] = fmt
+    superdooper[name] = fmt
     return this
   }
 
@@ -293,11 +293,11 @@ function token (name, fn) {
    */
   
   function getFormatFunction () {
-    return compile(betlogger.default);
+    return compile(superdooper.default);
   }
 
   /*!
- * betlogger
+ * superdooper
  * Copyright(c) 2018 Leon Tinashe Mwandiringa.
  * MIT Licensed
  * reusable functions store

@@ -1,7 +1,7 @@
 {
-  "name": "betlogger",
+  "name": "superdooper",
   "description": "Lightweight blazing fast HTTP request logger middleware for node.js for logging request metrics and stats",
-  "version": "1.0.0",
+  "version": "1.0.5",
   "contributors": [
     "Leon Tinashe Mwandiringa <tinashe.leon@yahoo.com><leonmwandiringa.ga>"
   ],
@@ -10,11 +10,11 @@
     "express",
     "http",
     "logger",
-    "betloggerjs",
+    "superdooperjs",
     "middleware",
     "nodejs"
   ],
-  "repository": "techadontech/betlogger",
+  "repository": "techadontech/superdooper",
   "dependencies": {
     "debug": "2.6.9",
     "on-finished": "~2.3.0",
