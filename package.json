@@ -1,0 +1,31 @@
+{
+    "name": "betlog",
+    "description": "Lightweight blazing fast HTTP request logger middleware for node.js for logging request metrics and stats",
+    "version": "1.0.0",
+    "contributors": [
+      "Leon Tinashe Mwandiringa <tinashe.leon@yahoo.com><leonmwandiringa.ga>"
+    ],
+    "license": "MIT",
+    "keywords": [
+      "express",
+      "http",
+      "logger",
+      "betlog",
+      "middleware",
+      "nodejs"
+    ],
+    "repository": "expressjs/morgan",
+    "dependencies": {
+      "debug": "2.6.9",
+      "on-finished": "~2.3.0",
+      "on-headers": "~1.0.1"
+    },
+    "files": [
+      "LICENSE",
+      "README.md",
+      "index.js"
+    ],
+    "engines": {
+      "node": ">= 0.8.0"
+    }
+  }
