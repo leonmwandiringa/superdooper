@@ -2,7 +2,22 @@
 
 Betlog is a Lightweight blazing fast HTTP request logger middleware for node.js for logging request metrics and stats.
 
+## Features
 
+logging incoming requests in
+    Request Time in UTC
+    Remote IP address
+    Request method 
+    Request URL 
+    Http-version
+    Response Status
+    Response Content Length 
+    Request Referrer
+    Request User-agent
+    Response time 
+    Cpu usage Time
+    Memory used to process request
+    
 ## Importing
 
 ```javascript
