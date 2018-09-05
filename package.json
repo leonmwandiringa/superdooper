@@ -14,7 +14,7 @@
       "middleware",
       "nodejs"
     ],
-    "repository": "expressjs/betlog",
+    "repository": "techadontech/betlog",
     "dependencies": {
       "debug": "2.6.9",
       "on-finished": "~2.3.0",
