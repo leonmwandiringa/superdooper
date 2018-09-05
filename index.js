@@ -21,7 +21,7 @@ module.exports.token = token
  * @private
  */
 
-var HELPER = require('./helpers.js')
+var HELPER = require('helpers.js')
 var debug = require('debug')('betlog')
 var onFinished = require('on-finished')
 var onHeaders = require('on-headers')
