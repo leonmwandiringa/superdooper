@@ -30,7 +30,7 @@ import superdooper from 'superdooper';
 
 ## Contributors
 
-Currently the module is being mainatined by [Leon Tinashe Mwandiringa](https://twitter.com/ogtechadon)
+Currently the module is being mainatined by [Leon Tinashe Mwandiringa](https://twitter.com/0xL3onardo)
 more contributors are welcome
 
 ## Installation
@@ -72,6 +72,6 @@ if you dont want to log to afile you can write the middleware without any parame
 
 ## License
 
-Copyright (c) 2018 Leontinashe &lt;tinashe.leon@yahoo.com&gt;
+Copyright (c) 2018 Leontinashe &lt;leonmwandiringa@gmail.com&gt;
 
 This module is licensed under GPL Liense v3.0
